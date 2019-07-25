@@ -1,6 +1,7 @@
 import math
 import setup
 import pandas as pd
+from collections import Counter
 
 def find_potential_splits(current_df):
 	previous_value = current_df.iloc[0,0]
@@ -121,8 +122,9 @@ def decision_tree_learning(train_df, depth):
 	else:
 		split = find_split (train_df)
 		if (split['attr'] == None):
-			value = train_df[setup.label].value_counts().argmax()
-			return ({'attr' : setup.label , 'value' : value, 'left' : None, 'right' : None, 'leaf' : True }, depth)
+			values_list = train_df[setup.label].tolist()
+			# data = Counter(values_list)
+			return ({'attr' : setup.label , 'value' : values_list[0], 'left' : None, 'right' : None, 'leaf' : True }, depth)
 		# print('the following split is to take place:')
 		# print(split)
 		#decided_splits_list.append((str(split['attr']) + '>' + str(split['value'])))
@@ -206,4 +208,18 @@ def decision_tree_learning(train_df, depth):
 #print('entropy reduction')
 #print(curr__split_entropy)
 #print(temp_df)
+
+# part_len = int(len(setup.train_df) / 10)
+# train_part = setup.train_df.iloc[part_len:, :]
+# depth_2 = 0
+# tree_2, depth_2 = build_tree.decision_tree_learning(train_part, depth_2)
+# prune_list = []
+# prune_list = pruning.find_potential_prunes( tree_2 , prune_list)
+# print(('\n' * 4) + 'prune_list:')
+# for i in range(len(prune_list)):
+#     print(prune_list[i])
+#     print('\n')
+# valid_part = setup.train_df.iloc[:part_len, :]
+# tree_2 = pruning.prune_tree (tree_2, valid_part)
+
 ######################################################################################################################################################################
